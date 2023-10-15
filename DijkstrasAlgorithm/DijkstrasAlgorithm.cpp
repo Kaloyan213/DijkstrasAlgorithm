@@ -2,7 +2,6 @@
 #include <vector>
 #include <queue>
 #include <limits>
-#include <cmath>
 #include <stack>
 
 const int INF = std::numeric_limits<int>::max();
