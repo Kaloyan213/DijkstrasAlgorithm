@@ -12,22 +12,22 @@ struct Edge {
 };
 
 std::vector<int> prev;
-std::vector<std::vector<Edge>> graph;
+using Graph = std::vector<std::vector<Edge>>;
 
 
-void addEdge(int from, int to, int weight) {
+void addEdge(int from, int to, int weight, Graph& graph) {
     graph.at(from).push_back({ to, weight });
     graph.at(to).push_back({ from, weight });
 }
 
-auto dijkstra(int startNode) {
-
+auto dijkstra(int startNode, int endNode, const Graph& graph) {
     int numNodes = graph.size();
     std::vector <int> distance(numNodes, INF);
     distance.at(startNode) = 0;
     prev.assign(numNodes, -1);
 
     //creates a priority queue with pair for current distance and current node
+    std::priority_queue<std::pair<int, int>, std::vector <std::pair<int, int>>> pq;
 
     pq.push({ 0, startNode });
 
@@ -50,7 +50,6 @@ auto dijkstra(int startNode) {
                 prev.at(neighbour) = currentNode;
             }
         }
-
     }
     return distance;
 }
@@ -78,23 +77,24 @@ void printShortestPath(int startNode, int endNode) {
 
 int main() {
     int numNodes = 9; // since we dont use push_back method for the vector 
-    graph.resize(numNodes);
+    Graph graph(numNodes);
+
 
     // Define the graph (connections and weights)
-    addEdge(0, 1, 4);
-    addEdge(0, 7, 8);
-    addEdge(1, 2, 8);
-    addEdge(1, 7, 11);
-    addEdge(2, 3, 7);
-    addEdge(2, 8, 2);
-    addEdge(2, 5, 4);
-    addEdge(3, 4, 9);
-    addEdge(3, 5, 14);
-    addEdge(4, 5, 10);
-    addEdge(5, 6, 2);
-    addEdge(6, 7, 1);
-    addEdge(6, 8, 6);
-    addEdge(7, 8, 7);
+    addEdge(0, 1, 4, graph);
+    addEdge(0, 7, 8, graph);
+    addEdge(1, 2, 8, graph);
+    addEdge(1, 7, 11, graph);
+    addEdge(2, 3, 7, graph);
+    addEdge(2, 8, 2, graph);
+    addEdge(2, 5, 4, graph);
+    addEdge(3, 4, 9, graph);
+    addEdge(3, 5, 14, graph);
+    addEdge(4, 5, 10, graph);
+    addEdge(5, 6, 2, graph);
+    addEdge(6, 7, 1, graph);
+    addEdge(6, 8, 6, graph);
+    addEdge(7, 8, 7, graph);
 
     /*                            Node Weight
          Node 0 is connected to : ( 1,   4)    (7, 8)
@@ -111,7 +111,7 @@ int main() {
     int startNode = 3;
     int endNode = 4;
 
-    auto shortestDistances = dijkstra(startNode);
+    auto shortestDistances = dijkstra(startNode,endNode, graph);
 
 
 
