@@ -27,9 +27,9 @@ auto dijkstra(int startNode) {
     distance.at(startNode) = 0;
     prev.assign(numNodes, -1);
 
+    //creates a priority queue with pair for current distance and current node
 
-    std::priority_queue<std::pair<int, int>, std::vector <std::pair<int, int>>> pq; // creates a priority queue with underlist vector and two integer values for the sum of distance and the current Node which its working on
-    pq.push({ 0,startNode });
+    pq.push({ 0, startNode });
 
     while (!pq.empty()) {
         int currentDistance = pq.top().first;
